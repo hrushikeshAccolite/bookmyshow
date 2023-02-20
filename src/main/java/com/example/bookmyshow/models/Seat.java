@@ -1,9 +1,17 @@
 package com.example.bookmyshow.models;
 
+import java.util.Date;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.Getter;
@@ -13,31 +21,31 @@ import lombok.Setter;
 @Setter
 @Getter
 @Data
-@Table(name = "seat")
+@Table(name = "seats")
 public class Seat {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long seatId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long seatId;
 
-    private String seatName;
+    @Column(name = "seatNumber", nullable = false)
+    private String seatNumber;
 
-    private String seatType;
+    @Column(name = "price", nullable = false)
+    private double price;
 
-    private String seatStatus;
+    @Column(name = "isBooked", nullable = false)
+    private boolean isBooked;
 
-    private Long showId;
+    @CreationTimestamp
+    @Column(name = "bookedAt", nullable = false)
+    private Date bookedAt;
 
-    private Long userId;
+    @ManyToOne
+    @JsonIgnore
+    private Show show;
 
-    private Long bookingId;
+    @ManyToOne
+    @JsonIgnore
+    private Booking booking;
 
-    private Long price;
-
-    private Long movieId;
-
-    private Long theatreId;
-
-    private Long screenId;
-
-    private Long seatNumber;
 }

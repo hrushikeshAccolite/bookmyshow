@@ -29,7 +29,6 @@ public class MovieServicesImpl implements MovieServices{
         if(movieObj.isPresent()){
             Movie updatedMovie = movieObj.get();
             updatedMovie.setMovieName(movie.getMovieName());
-            updatedMovie.setMovieDescription(movie.getMovieDescription());
             updatedMovie.setMovieLanguage(movie.getMovieLanguage());
             updatedMovie.setMovieGenre(movie.getMovieGenre());
             return this.movieRepository.save(updatedMovie);

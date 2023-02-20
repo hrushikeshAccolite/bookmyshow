@@ -1,9 +1,8 @@
 package com.example.bookmyshow.models;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
-
-import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,34 +19,36 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
+@Entity
 @Data
-@Table(name = "booking")
-public class Booking {
+@Table(name = "shows")
+public class Show {
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long bookingId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long showId;
 
-    @Column(name = "seat" , nullable = false)
-    private String seat;
+    @Column(name = "showDate", columnDefinition = "DATE", nullable = false)
+	private LocalDate showDate;
 
-    @Column(name = "bookingPrice" , nullable = false)
-    private double bookingPrice;
-
-    @CreationTimestamp
-    private Date bookingDateAndTime;
+	@Column(name = "showTime", columnDefinition = "TIME", nullable = false)
+	private LocalTime showTime;
 
     @ManyToOne
     @JsonIgnore
-    private User user;
-
+    private Movie movie;
+    
     @ManyToOne
-	@JsonIgnore
-	private Show show;
+    @JsonIgnore
+    private Theatre theatre;
 
-	@OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Booking> booking;
+
+    @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Seat> seats;
 }
